@@ -1,0 +1,63 @@
+{
+    // Use o IntelliSense para saber mais sobre os atributos possíveis.
+    // Focalizar para exibir as descrições dos atributos existentes.
+    // Para obter mais informações, acesse: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "TestGame",
+            "request": "launch",
+            "mainClass": "Telas.TestGame",
+            "projectName": "Realms Ascensions_18fc32d2"
+        },
+        {
+            "type": "java",
+            "name": "historia",
+            "request": "launch",
+            "mainClass": "Telas.historia",
+            "projectName": "Realms Ascensions_18fc32d2"
+        },
+        {
+            "type": "java",
+            "name": "reino",
+            "request": "launch",
+            "mainClass": "Jogo.reino",
+            "projectName": "Realms Ascensions_18fc32d2"
+        },
+        {
+            "type": "java",
+            "name": "RealmsAscensionGame",
+            "request": "launch",
+            "mainClass": "RealmsAscensionGame",
+            "projectName": "Realms Ascensions_18fc32d2"
+        },
+        {
+            "name": "Java",
+            "type": "java",
+            "request": "launch",
+            "stopOnEntry": true,
+            "jdkPath": "${env:JAVA_HOME}/bin",
+            "cwd": "${fileDirname}",
+            "startupClass": "${fileBasenameNoExtension}",
+            "classpath": [
+                ".",
+                "${fileDirname}"
+            ]
+        },
+        {
+            "name": "Java Console App",
+            "type": "java",
+            "request": "launch",
+            "stopOnEntry": true,
+            "jdkPath": "${env:JAVA_HOME}/bin",
+            "cwd": "${fileDirname}",
+            "startupClass": "${fileBasenameNoExtension}",
+            "classpath": [
+                ".",
+                "${fileDirname}"
+            ],
+            "externalConsole": true
+        }
+    ]
+}

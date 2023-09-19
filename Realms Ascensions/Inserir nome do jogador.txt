@@ -1,0 +1,55 @@
+
+        //PARTE DO JOGO
+        //Definindo variáveis
+        startPanel.setLayout(new GridBagLayout());
+        GridBagConstraints registerConstraints = new GridBagConstraints();
+
+        //Diálogo Inicial
+        JLabel PlayerName = new JLabel("Jogador 1 -");
+        PlayerName.setFont(new Font("Verdana", Font.PLAIN, 35));
+        PlayerName.setAlignmentX(Component.CENTER_ALIGNMENT);
+        PlayerName.setAlignmentY(Component.TOP_ALIGNMENT);
+
+        //Posição do PLayerName
+        registerConstraints.gridx = 0;
+        registerConstraints.gridy = 0;
+        registerConstraints.insets = new Insets(0, 0, 25, 0);
+        registerConstraints.fill = GridBagConstraints.NONE;
+
+        //Adicionando o playerName na posição 0
+        startPanel.add(PlayerName, registerConstraints);
+
+        text = new JTextField();
+        text.setPreferredSize(new Dimension(200, 35));
+        text.setFont(new Font("Verdana", Font.PLAIN, 20));
+        text.setAlignmentX(Component.CENTER_ALIGNMENT);
+        text.setAlignmentY(-10);
+        //Adicionando o text na posição 0
+        registerConstraints.gridx = 1;
+        startPanel.add(text, registerConstraints);
+
+        JLabel PlayerGender = new JLabel("Informe seu Gênero:");
+        JRadioButton gender1 = new JRadioButton("Masculino");
+        JRadioButton gender2 = new JRadioButton("Feminino");
+        PlayerGender.setFont(new Font("Tilt Prism", Font.PLAIN, 35));
+        gender1.setFont(new Font("Verdana", Font.PLAIN, 35));
+        gender2.setFont(new Font("Verdana", Font.PLAIN, 35));
+        
+        ButtonGroup buttonGroup = new ButtonGroup();
+        buttonGroup.add(gender1);
+        buttonGroup.add(gender2);
+
+        registerConstraints.gridx = 0;
+        registerConstraints.gridy = 2;
+        startPanel.add(PlayerGender, registerConstraints);
+
+        registerConstraints.gridy = 3;
+        startPanel.add(gender1, registerConstraints);
+
+        registerConstraints.gridy = 4;
+        startPanel.add(gender2, registerConstraints);
+        
+        
+
+        
+        

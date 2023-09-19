@@ -1,0 +1,383 @@
+/*Créditos
+ * 
+ * Icons Flaticon
+ */
+
+//Bibliotecas
+
+//AWT
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+//Swing
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
+
+//Classes do jogo
+import sound.musicEpic;
+import Telas.StartGame;
+
+public class RealmsAscensionGame {
+
+    //Frames
+    private JFrame frame;
+
+    //Paineis
+    private JPanel panel, panel2, selectionPanel, creditsPanel, configPanel;
+    
+    //Dimensão dos botões
+    private Dimension buttonSizeBig = new Dimension(350, 50);
+    private Dimension buttonSizeSmall = new Dimension(100, 50);
+
+    //Definindo o tempo
+    private int duration = 5000;
+
+    //Caminho da música
+    private String IceGiants = "src/resources/music/The-Ice-Giants.wav";
+
+    //Variáveis Booleans
+    private boolean playMusic = false;
+    private boolean fullScreen;
+
+    private GraphicsDevice device;
+    
+    //Objetos
+    musicEpic epic = new musicEpic(IceGiants);
+    StartGame game = new StartGame();
+
+    public RealmsAscensionGame() {
+        
+        //Criando a janela
+        frame = new JFrame("Realms Ascensions");
+        frame.setSize(1280, 768);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().setBackground(new Color( 196, 199, 199));
+        frame.setLocationRelativeTo(null);
+        frame.setResizable(true);
+        frame.setVisible(true);
+
+        //Criando o JPanel que vai armazenar o componente textInit e adicionando um layout manager
+        panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+        panel2 = new JPanel();
+        panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
+
+        //Criando o texto de boas vindas, apresentação do jogo e definindo suas propriedades
+        JLabel textInit = new JLabel("Bem-vindo(a) ao Realms Ascensions");
+        textInit.setFont(new Font("Verdana", Font.BOLD, 35));
+        textInit.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JLabel textInit2 = new JLabel("<html> <div style='text-align: center;'>Realms Ascensions é um jogo simples de dois jogadores ou mais, cujo objetivo é diversão, testar suas técnicas de administração e aprender como funcionava o estilo de vida durante a idade média.</div></html>");
+        textInit2.setFont(new Font("Verdana", Font.BOLD, 35));
+        textInit2.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        //Adicionando janelas
+        panel.add(Box.createVerticalGlue());
+        panel.add(textInit);
+        panel.add(Box.createVerticalGlue());
+
+        panel2.add(Box.createVerticalGlue());        
+        panel2.add(textInit2);
+        panel2.add(Box.createVerticalGlue());
+
+        //Adicionando o Panel no frame
+        frame.add(panel);
+
+        //Adicionando o evento de transição de tela com o Jframe
+        Timer timeTextInit = new Timer(duration, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.remove(panel);
+                frame.add(panel2);
+                frame.revalidate();
+                frame.repaint();
+                startselectionPanel();
+            }
+        }); 
+        //Iniciando o temporizador do TextInit
+        timeTextInit.setRepeats(false);
+        timeTextInit.start();
+    }
+
+    public void startselectionPanel(){
+
+        //Inicia a música
+        epic.playMusicMenu();
+
+        //Definindo váriaveis
+        selectionPanel = new JPanel();
+        selectionPanel.setLayout(new GridBagLayout());
+        GridBagConstraints buttonSelectionConstraints = new GridBagConstraints();
+
+        //Adicionando o JLabel para colocar o nome do jogo no menu de seleção
+        JLabel gameNameLabel = new JLabel("<html><div style='text-align: center;'>Realms Ascensions</div></html>");
+        gameNameLabel.setFont(new Font("Verdana", Font.BOLD, 55));
+        buttonSelectionConstraints.gridx = 0;
+        buttonSelectionConstraints.gridy = 0;
+        buttonSelectionConstraints.insets = new Insets(0, 0, 100, 0); //Espaçamento
+        buttonSelectionConstraints.anchor = GridBagConstraints.CENTER;
+        buttonSelectionConstraints.fill = GridBagConstraints.NONE;
+
+        //Adicionando o JLabel no JPanel
+        selectionPanel.add(gameNameLabel, buttonSelectionConstraints);
+
+        //Criando os botões de seleção do jogo
+        JButton newGameButton = new JButton( "Novo Jogo");        
+        newGameButton.setFont(new Font("Verdana", Font.BOLD, 25));
+        newGameButton.setPreferredSize(buttonSizeBig);
+
+        JButton configButton = new JButton("Configurações");
+        configButton.setFont(new Font("Verdana", Font.BOLD, 25));
+        configButton.setPreferredSize(buttonSizeBig);
+
+        JButton creditsButton = new JButton("Créditos");
+        creditsButton.setFont(new Font("Verdana", Font.BOLD, 25));
+        creditsButton.setPreferredSize(buttonSizeBig);
+
+        JButton exitButton = new JButton("Sair");
+        exitButton.setFont(new Font("Verdana", Font.BOLD, 25));
+        exitButton.setPreferredSize(buttonSizeBig);
+
+        //Configuração das restrições dos botões
+        buttonSelectionConstraints.gridx = 0;
+        buttonSelectionConstraints.gridy = 0;
+        buttonSelectionConstraints.fill = GridBagConstraints.HORIZONTAL;
+        buttonSelectionConstraints.insets = new Insets(10, 10, 10, 10);
+        buttonSelectionConstraints.anchor = GridBagConstraints.CENTER;
+
+        //Adicionando os botões
+        buttonSelectionConstraints.gridy = 1;
+        selectionPanel.add(newGameButton, buttonSelectionConstraints);
+
+        buttonSelectionConstraints.gridy = 2;
+        selectionPanel.add(configButton, buttonSelectionConstraints);
+
+        buttonSelectionConstraints.gridy = 3;
+        selectionPanel.add(creditsButton, buttonSelectionConstraints);
+
+        buttonSelectionConstraints.gridy = 4;
+        selectionPanel.add(exitButton, buttonSelectionConstraints);
+
+        //Configurações das ações dos botões (ATENÇÃO PARTE IMPORTANTE!!!!!!). Nessa parte que deverá ser desenvolvido o jogo
+        newGameButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+
+            //Start Game
+            JPanel startPanel = game.getPainel();
+            frame.remove(selectionPanel);
+            frame.add(startPanel);
+            frame.revalidate();
+            frame.repaint();
+            }
+        });
+
+        //Painel das configurações
+        configButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+           
+            GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            device = env.getDefaultScreenDevice();
+
+            //Configuração do painel e layout das configurações
+            configPanel = new JPanel();   
+            configPanel.setLayout(new GridBagLayout()); 
+            GridBagConstraints optionsConstraints = new GridBagConstraints();
+            
+            //Configuração do titulo
+            JLabel configTitleLabel = new JLabel("<html><div>Configurações</div></html>");
+            configTitleLabel.setFont(new Font("Verdana", Font.BOLD,35));
+            
+            //Configuração da posição do titulo
+            optionsConstraints.gridx = 0;
+            optionsConstraints.gridy = 0;
+            optionsConstraints.insets = new Insets(0, 0, 100, 0);
+            optionsConstraints.fill = GridBagConstraints.NONE;
+            
+            //Adicionando o titulo no JPanel
+            configPanel.add(configTitleLabel, optionsConstraints);
+            
+            //Configuração dos botões
+            JButton soundButton = new JButton("Música");   
+            soundButton.setFont(new Font("Verdana",Font.BOLD,25));
+            soundButton.setPreferredSize(buttonSizeSmall);
+
+            JButton fullscreenButton = new JButton("Tela Cheia");
+            fullscreenButton.setFont(new Font("Verdana",Font.BOLD,25));
+            fullscreenButton.setPreferredSize(buttonSizeSmall);
+
+            JButton backToMenuButton = new JButton("Voltar");
+            backToMenuButton.setFont(new Font("Verdana", Font.BOLD, 25));
+            backToMenuButton.setPreferredSize(buttonSizeSmall);
+
+            //Eventos de ações dos botões
+            soundButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e){
+                    if(!playMusic){
+                        epic.playMusicMenu();
+                        playMusic = true;
+                    }else{
+                        epic.stopMusic();
+                        playMusic = false;
+                    }
+                }       
+            });
+
+            fullscreenButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e){
+                    if (fullScreen) {
+                        frame.dispose();
+                        device.setFullScreenWindow(null);
+                        frame.setUndecorated(false);
+                        frame.setVisible(true);
+                        fullScreen = false;
+                    }else{
+                        frame.dispose();
+                        frame.setUndecorated(true);
+                        device.setFullScreenWindow(frame);
+                        frame.setVisible(true);
+                        fullScreen = true;
+                    }
+                }
+            });
+
+            backToMenuButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e){
+                    frame.remove(configPanel);
+                    frame.add(selectionPanel);
+                    frame.revalidate();
+                    frame.repaint();
+                }
+            });
+            //Configuração das restrições dos botões
+            optionsConstraints.gridx = 0;
+            optionsConstraints.gridy = 0;
+            optionsConstraints.fill = GridBagConstraints.HORIZONTAL;
+            optionsConstraints.insets = new Insets(10, 10, 10, 10);
+            optionsConstraints.anchor = GridBagConstraints.CENTER;
+            
+            optionsConstraints.gridy = 1;
+            configPanel.add(soundButton,optionsConstraints);
+
+            optionsConstraints.gridy = 2;
+            configPanel.add(fullscreenButton,optionsConstraints);
+
+            optionsConstraints.gridy = 3;
+            configPanel.add(backToMenuButton, optionsConstraints);
+
+            frame.remove(selectionPanel);
+            frame.add(configPanel);
+            frame.revalidate();
+            frame.repaint();
+            }
+        });
+
+        creditsButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+
+                //Configurando o JPanel de referência dos autores do código
+                creditsPanel = new JPanel();
+                creditsPanel.setLayout(new BoxLayout(creditsPanel, BoxLayout.Y_AXIS));
+
+                //Labels com os nomes dos autores
+                JLabel actor1 = new JLabel("Eduardo de Andrade");
+                actor1.setFont(new Font("Verdana", Font.PLAIN, 35));
+                actor1.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+                JLabel actor2 = new JLabel("Eider Souza");
+                actor2.setFont(new Font("Verdana", Font.PLAIN, 35));
+                actor2.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+                JLabel actor3 = new JLabel("Everton Serra");
+                actor3.setFont(new Font("Verdana", Font.PLAIN, 35));
+                actor3.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+                JLabel actor4 = new JLabel("Felipe Soares");
+                actor4.setFont(new Font("Verdana", Font.PLAIN, 35));
+                actor4.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+                JLabel actor5 = new JLabel("Mari Alessandra");
+                actor5.setFont(new Font("Verdana", Font.PLAIN, 35));
+                actor5.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+                //JButton para voltar ao JPanel anterior
+                JButton backSelectionButton = new JButton("Voltar");
+                backSelectionButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+                backSelectionButton.setFont(new Font("Verdana", Font.BOLD, 25));
+
+                //Adicionando os componentes do JLabel ao JPanel
+                creditsPanel.add(Box.createVerticalGlue());
+                creditsPanel.add(actor1);
+                creditsPanel.add(Box.createVerticalStrut(15));
+                creditsPanel.add(actor2);
+                creditsPanel.add(Box.createVerticalStrut(15));
+                creditsPanel.add(actor3);
+                creditsPanel.add(Box.createVerticalStrut(15));
+                creditsPanel.add(actor4);
+                creditsPanel.add(Box.createVerticalStrut(15));
+                creditsPanel.add(actor5);
+                creditsPanel.add(Box.createVerticalStrut(35));//Espaçamento do último nome para o botão de voltar
+                creditsPanel.add(backSelectionButton);
+                creditsPanel.add(Box.createVerticalGlue());
+
+                //Remoção do Panel anterior
+                frame.remove(selectionPanel);
+
+                //Adicionando o JPanel de créditos ao frame
+                frame.add(creditsPanel);
+                frame.revalidate();
+                frame.repaint();
+
+                //Ação do botão de voltar
+                backSelectionButton.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e){
+                        frame.remove(creditsPanel);
+                        frame.add(selectionPanel);
+                        frame.revalidate();
+                        frame.repaint();
+                    }
+                });
+            }
+        });
+
+        exitButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                System.exit(0);
+            }
+        });
+
+        //Adicionando o evento de transição de tela com o Jframe
+        Timer timeselectionPanel = new Timer(duration, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.remove(panel2);
+                frame.add(selectionPanel);
+                frame.revalidate();
+                frame.repaint();
+            }
+        }); 
+        
+        //Iniciando o temporizador do menu de seleção
+        timeselectionPanel.setRepeats(false);
+        timeselectionPanel.start();
+    }
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new RealmsAscensionGame());
+    }
+
+}
